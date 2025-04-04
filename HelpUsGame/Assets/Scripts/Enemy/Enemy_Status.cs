@@ -30,7 +30,7 @@ public class Enemy_Status : MonoBehaviour
         health = health - value;
         
         float knockback = (pos ? 1.5f : -1.5f) * Mathf.Abs(1);
-        rig.AddForce(new Vector2(knockback, knockback), ForceMode2D.Impulse);
+        rig.AddForce(new Vector2(knockback, 1.5f), ForceMode2D.Impulse);
         if(health <= 0){
             Destroy(this.gameObject);
         }

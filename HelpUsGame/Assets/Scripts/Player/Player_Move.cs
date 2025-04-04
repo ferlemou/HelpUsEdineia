@@ -9,6 +9,7 @@ public class Player_Move : MonoBehaviour
     private float speed, jumpForce;
     private Vector2 moveDirection = Vector2.zero;
     private bool isGrounded;
+    public bool horizontal;
 
     //InputActions
     private PlayerInputActions playerControls;
@@ -42,10 +43,24 @@ public class Player_Move : MonoBehaviour
     }
     private void FixedUpdate(){
         Moviment();
+        Rotation();
     }
     private void Moviment(){
         moveDirection = move.ReadValue<Vector2>();
         rig.velocity = new Vector2(moveDirection.x *speed, rig.velocity.y);
+    }
+    private void Rotation(){
+        Vector2 direction = move.ReadValue<Vector2>();
+        switch (direction.x){
+            case >0.1f:
+                transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                horizontal = true;
+            break;
+            case <-0.1f:
+                transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                horizontal = false;
+            break;
+        }
     }
     private void Jump(InputAction.CallbackContext context){
         if (isGrounded){
